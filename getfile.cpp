@@ -1,38 +1,38 @@
-#includefstream
-#includevector
-#includestring
-#includeiostream
+ï»¿#include<fstream>
+#include<vector>
+#include<string>
+#include<iostream>
 
 using namespace std;
 
-vectorvectorint getfile() 
+vector<vector<int>> getfile() 
 {
-	vectorvectorint v;
-	string filename = test.txt;
+	vector<vector<int>> v;
+	string filename = "test.txt";
 	ifstream in;
 	in.open(filename);
-	string line;¶ÁÈ¡Ã¿Ò»ĞĞÊı¾İ
-	Èç¹û´ò²»¿ªµÄÇé¿öÁí¿¼ÂÇ
+	string line;//è¯»å–æ¯ä¸€è¡Œæ•°æ®
+	//å¦‚æœæ‰“ä¸å¼€çš„æƒ…å†µå¦è€ƒè™‘
 	if (!in)
 	{
-		cout  ´ò¿ªÎÄ¼ş³ö´í;
+		cout << "æ‰“å¼€æ–‡ä»¶å‡ºé”™";
 		return v;
 	}
-	vectorint tep;
+	vector<int> tep;
 	while (getline(in,line))
 	{
 		tep.clear();
-		for (int i = 0; i  line.length(); i++)
+		for (int i = 0; i < line.length(); i++)
 		{
 			switch (line[i])
 			{
-			case '1'
+			case '1':
 				tep.push_back(1);
 				break;
-			case '0'
+			case '0':
 				tep.push_back(0);
 				break;
-			default
+			default:
 				break;
 			}	
 		}
