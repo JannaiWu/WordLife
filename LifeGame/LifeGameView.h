@@ -48,6 +48,11 @@ protected:
 public:
 	afx_msg void NEXTSTEP();
 	afx_msg void STARTGAME();
+	afx_msg void PAUSE();
+	afx_msg void slow();
+	afx_msg void MIDDLE();
+	afx_msg void FAST();
+	afx_msg void OnFileOpen();
 };
 
 #ifndef _DEBUG  // LifeGameView.cpp 中的调试版本

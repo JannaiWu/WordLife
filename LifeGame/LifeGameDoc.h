@@ -6,6 +6,9 @@
 #pragma once
 
 #include<vector>
+#include<string>
+
+#define WORLDMAX 1000
 
 using namespace std;
 
@@ -21,7 +24,8 @@ public:
 	vector<vector<int>> nextv;
 // 操作
 public:
-	virtual void getfile();//虚构函数获取输入
+	void getfile(string filename);
+	//虚构函数获取输入
 	virtual int get_neightbor_cells(int index_x,int index_y);
 	virtual int nextlife(int now,int count);
 	virtual void getnext();

@@ -23,6 +23,7 @@
 #include<string>
 #include<fstream>
 
+#define WORLDMAX 100
 
 
 // CLifeGameDoc
@@ -39,7 +40,6 @@ END_MESSAGE_MAP()
 CLifeGameDoc::CLifeGameDoc() noexcept
 {
 	// TODO: 在此添加一次性构造代码
-	getfile();
 }
 
 CLifeGameDoc::~CLifeGameDoc()
@@ -47,10 +47,11 @@ CLifeGameDoc::~CLifeGameDoc()
 }
 
 //获取读入文件
-void CLifeGameDoc::getfile()
+void CLifeGameDoc::getfile(string filename)
 {
-	vector<vector<int>> v;
-	string filename = "test.txt";
+	vector<vector<int>> v(WORLDMAX,vector<int>());
+	for (int i = 0; i < WORLDMAX; i++)
+		v[i].resize(WORLDMAX);
 	ifstream in;
 	in.open(filename);
 	string line;
@@ -58,25 +59,24 @@ void CLifeGameDoc::getfile()
 	{
 		return;
 	}
-	vector<int> tep;
+	int n = 0;
 	while (getline(in, line))
 	{
-		tep.clear();
 		for (int i = 0; i < line.length(); i++)
 		{
 			switch (line[i])
 			{
 			case '1':
-				tep.push_back(1);
+				v[n][i]=1;
 				break;
 			case '0':
-				tep.push_back(0);
+				v[n][i]=0;
 				break;
 			default:
 				break;
 			}
 		}
-		v.push_back(tep);
+		n++;
 	}
 	this->v=v;
 	return;

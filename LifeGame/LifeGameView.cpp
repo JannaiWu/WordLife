@@ -10,9 +10,14 @@
 #include "LifeGame.h"
 #endif
 
+#include<string>
+
 #define MAXM 100
 #define MAXN 100
 #define Width 20
+
+int initime = 1000;
+int timestep=1000;
 
 #include "LifeGameDoc.h"
 #include "LifeGameView.h"
@@ -36,6 +41,11 @@ BEGIN_MESSAGE_MAP(CLifeGameView, CView)
 	ON_WM_TIMER()
 	ON_COMMAND(ID_32771, &CLifeGameView::NEXTSTEP)
 	ON_COMMAND(ID_32772, &CLifeGameView::STARTGAME)
+	ON_COMMAND(ID_32773, &CLifeGameView::PAUSE)
+	ON_COMMAND(ID_32774, &CLifeGameView::slow)
+	ON_COMMAND(ID_32775, &CLifeGameView::MIDDLE)
+	ON_COMMAND(ID_32776, &CLifeGameView::FAST)
+	ON_COMMAND(ID_FILE_OPEN, &CLifeGameView::OnFileOpen)
 END_MESSAGE_MAP()
 
 // CLifeGameView 构造/析构
@@ -169,6 +179,7 @@ void CLifeGameView::OnTimer(UINT_PTR id)
 	{
 	case 1:
 		NEXTSTEP();
+		break;
 	}
 	CView::OnTimer(id);
 }
@@ -183,13 +194,71 @@ void CLifeGameView::NEXTSTEP()
 	CDC* pDC = GetDC();
 	pDoc->getnext();
 	Invalidate(1);
-	//nDraw(pDC);
-	//SetTimer(1, 1000, NULL);
 }
 
 
 void CLifeGameView::STARTGAME()
 {
 	// TODO: 在此添加命令处理程序代码
-	SetTimer(1, 100, NULL);
+	SetTimer(1, initime, NULL);
+}
+
+
+void CLifeGameView::PAUSE()
+{
+	KillTimer(1);
+}
+
+
+void CLifeGameView::slow()
+{
+	// TODO: 在此添加命令处理程序代码
+	KillTimer(1);
+	timestep *= 2;
+	SetTimer(1, timestep, NULL);
+}
+
+
+void CLifeGameView::MIDDLE()
+{
+	KillTimer(1);
+	timestep = initime;
+	SetTimer(1, timestep, NULL);
+}
+
+
+void CLifeGameView::FAST()
+{
+	KillTimer(1);
+	timestep /= 2;
+	if (timestep == 0)
+		timestep = 1;
+	SetTimer(1, timestep, NULL);
+}
+
+
+void CLifeGameView::OnFileOpen()
+{
+	// TODO: 在此添加命令处理程序代码
+	CString FilePathName;
+	CFileDialog dlg(TRUE, //TRUE为OPEN对话框，FALSE为SAVE AS对话框
+		NULL,
+		NULL,
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
+		NULL,
+		NULL);
+	if (dlg.DoModal() == IDOK)
+	{
+		FilePathName = dlg.GetPathName(); //文件名保存在了FilePathName里
+		string filename;
+		filename = CT2A(FilePathName);
+		CLifeGameDoc* pDoc = GetDocument();
+		pDoc->getfile(filename);
+		Invalidate(1);
+	}
+	else
+	{
+		return;
+	}
+
 }
